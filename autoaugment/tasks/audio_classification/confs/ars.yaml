@@ -1,0 +1,19 @@
+ars:
+    nb_iterations: 100
+    nb_directions: 8
+    nb_elite: 8
+    nb_workers: 8
+    step_size: 0.2
+    delta_std: 0.05
+    noise_size: 25000000
+    env_seed: 42
+    nb_evaluate: &nb_workers
+    policy:
+        type: linear
+        ob_filter: MeanStdFilter
+        action_dim: 30
+        ob_dim: 1
+exp:
+    dir: experiments/ars_exp_gtzan_00_resnet_5_100_0.2
+    policy_saved: line_policy.pickle
+    nb_gpu: 4

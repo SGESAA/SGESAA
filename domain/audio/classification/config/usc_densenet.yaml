@@ -1,0 +1,26 @@
+dataset_name: USC
+data_dir: /data/torch/datasets/audio/UrbanSound8K/audio
+dataaug: true
+pretrained: true
+scheduler: true
+model: inception
+batch_size: 32
+num_workers: 16
+epochs: 70
+lr: 0.0001
+weight_decay: 0.001
+num_folds: 10
+is_save: False
+checkpoint_dir: checkpoints
+window_sizes: [25, 50, 100]
+hop_sizes: [10, 25, 50]
+sample_rate: 22050
+csv_file: /data/torch/datasets/audio/UrbanSound8K/metadata/UrbanSound8K.csv
+preprocess_csv_dir: /data/torch/datasets/audio/UrbanSound8K/preprocessed
+n_fft: 2205
+reshape_length: 250
+num_channels: 3
+reduced_train_size: 1
+aug: ''
+exp:
+  dir: experiments/usc_inception

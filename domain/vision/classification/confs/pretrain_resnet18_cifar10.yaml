@@ -1,0 +1,21 @@
+model:
+  type: resnet18
+dataset: reduced_cifar10
+aug: default
+cutout: 16
+batch: 256
+epoch: 60
+lr: 0.05
+lr_schedule:
+  type: 'resnet'
+  warmup:
+    multiplier: 1
+    epoch: 5
+optimizer:
+  type: sgd
+  nesterov: True
+  decay: 0.0001
+  clip: 0
+  ema: 0
+exp:
+  dir: experiments/pretrain_resnet_18_rc10

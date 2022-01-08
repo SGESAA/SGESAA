@@ -1,0 +1,48 @@
+preprocess_csv_dir: /data/torch/datasets/audio/ESC-50/preprocessed
+dataset_name: ESC
+sample_rate: 44100
+pretrained: True
+model: resnet
+num_class: 50
+batch_size: 32
+learning_rate: 0.0001
+momentum: 0.9
+weight_decay: 0.001
+report_freq: 10
+epochs: 5
+seed: 42
+grad_clip: 5
+train_portion: 0.5
+arch_learning_rate: 0.005
+arch_weight_decay: 0
+use_cuda: True
+model_name: resnet
+num_workers: 16
+num_policies: 15
+temperature: 0.5
+unrolled: True
+reduced_train_size: 1
+learning_rate_min: 0.001
+num_channels: 3
+window_sizes: [25, 50, 100]
+hop_sizes: [10, 25, 50]
+n_fft: 4410
+reshape_length: 250
+
+exp:
+  dir: experiments/esc_resnet
+
+# parser.add_argument('--learning_rate_min',
+#                     type=float,
+#                     default=0.001,
+#                     help='min learning rate')
+
+# parser.add_argument('--model_path',
+#                     type=str,
+#                     default='saved_models',
+#                     help='path to save the model')
+# parser.add_argument('--save', type=str, default='EXP', help='experiment name')
+# parser.add_argument('--use_parallel',
+#                     type=bool,
+#                     default=False,
+#                     help="use data parallel default False")

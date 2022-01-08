@@ -1,0 +1,22 @@
+dataset_name: ESC
+data_dir: /data/torch/datasets/audio/ESC-50/audio
+pretrained: true
+scheduler: true
+model: densenet
+batch_size: 32
+num_workers: 16
+epochs: 5
+lr: 0.0001
+weight_decay: 0.001
+num_folds: 5
+is_save: False
+checkpoint_dir: checkpoints
+window_sizes: [25, 50, 100]
+hop_sizes: [10, 25, 50]
+sample_rate: 44100
+csv_file: /data/torch/datasets/audio/ESC-50/meta/esc50.csv
+preprocess_csv_dir: /data/torch/datasets/audio/ESC-50/preprocessed
+n_fft: 4410
+reshape_length: 250
+num_channels: 3
+reduced_train_size: 1

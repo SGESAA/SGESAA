@@ -1,0 +1,22 @@
+sges:
+    nb_iterations: 200
+    nb_directions: 8
+    nb_elite: 6
+    nb_workers: 8
+    step_size: 0.03
+    env_seed: 42
+    nb_evaluate: &nb_workers
+    warmup: 16
+    policy:
+        type: linear
+        ob_filter: MeanStdFilter
+        action_dim: 30
+        ob_dim: 1
+    noise:
+        alpha: 0
+        k: 20
+        std: 0.05
+exp:
+    dir: experiments/sges_cifar10_resnet18_ep_30_it_200_4000_dim_20
+    policy_saved: line_policy.pickle
+    nb_gpu: 2

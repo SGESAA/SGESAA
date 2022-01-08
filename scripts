@@ -1,0 +1,51 @@
+CUDA_VISIBLE_DEVICES=0,1 python -W ignore -u -m torch.distributed.launch --nproc_per_node=4 autoaugment/domain/vision/classification/train.py -c autoaugment/domain/vision/classification/confs/wrn_40x2_cifar10.yaml --verbose --aug=sges
+
+
+# AG_NEWS baseline训练测试
+
+CUDA_VISIBLE_DEVICES=0 python autoaugment/domain/nlp/classification/train.py --config autoaugment/domain/nlp/classification/configs/ag_news/han.yaml; python autoaugment/domain/nlp/classification/test.py --config autoaugment/domain/nlp/classification/configs/ag_news/han.yaml
+
+CUDA_VISIBLE_DEVICES=1 python autoaugment/domain/nlp/classification/train.py --config autoaugment/domain/nlp/classification/configs/ag_news/fasttext.yaml; python autoaugment/domain/nlp/classification/test.py --config autoaugment/domain/nlp/classification/configs/ag_news/fasttext.yaml
+
+CUDA_VISIBLE_DEVICES=2 python autoaugment/domain/nlp/classification/train.py --config autoaugment/domain/nlp/classification/configs/ag_news/attbilstm.yaml; python autoaugment/domain/nlp/classification/test.py --config autoaugment/domain/nlp/classification/configs/ag_news/attbilstm.yaml
+
+CUDA_VISIBLE_DEVICES=3 python autoaugment/domain/nlp/classification/train.py --config autoaugment/domain/nlp/classification/configs/ag_news/textcnn.yaml; python autoaugment/domain/nlp/classification/test.py --config autoaugment/domain/nlp/classification/configs/ag_news/textcnn.yaml
+
+CUDA_VISIBLE_DEVICES=3 python autoaugment/domain/nlp/classification/train.py --config autoaugment/domain/nlp/classification/configs/dbpedia/transformer.yaml; python autoaugment/domain/nlp/classification/test.py --config autoaugment/domain/nlp/classification/configs/dbpedia/transformer.yaml
+
+# DB_PEDIA baseline训练测试
+
+CUDA_VISIBLE_DEVICES=0 python autoaugment/domain/nlp/classification/train.py --config autoaugment/domain/nlp/classification/configs/dbpedia/han.yaml; python autoaugment/domain/nlp/classification/test.py --config autoaugment/domain/nlp/classification/configs/dbpedia/han.yaml
+
+CUDA_VISIBLE_DEVICES=1 python autoaugment/domain/nlp/classification/train.py --config autoaugment/domain/nlp/classification/configs/dbpedia/fasttext.yaml; python autoaugment/domain/nlp/classification/test.py --config autoaugment/domain/nlp/classification/configs/dbpedia/fasttext.yaml
+
+CUDA_VISIBLE_DEVICES=2 python autoaugment/domain/nlp/classification/train.py --config autoaugment/domain/nlp/classification/configs/dbpedia/attbilstm.yaml; python autoaugment/domain/nlp/classification/test.py --config autoaugment/domain/nlp/classification/configs/dbpedia/attbilstm.yaml
+
+CUDA_VISIBLE_DEVICES=3 python autoaugment/domain/nlp/classification/train.py --config autoaugment/domain/nlp/classification/configs/dbpedia/textcnn.yaml; python autoaugment/domain/nlp/classification/test.py --config autoaugment/domain/nlp/classification/configs/dbpedia/textcnn.yaml
+
+CUDA_VISIBLE_DEVICES=1 python autoaugment/domain/nlp/classification/train.py --config autoaugment/domain/nlp/classification/configs/dbpedia/transformer.yaml; python autoaugment/domain/nlp/classification/test.py --config autoaugment/domain/nlp/classification/configs/dbpedia/transformer.yaml
+
+
+
+# FOR AGNEWS AUG
+CUDA_VISIBLE_DEVICES=0 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/ag_news/fasttext.yaml --aug agnews_sges
+CUDA_VISIBLE_DEVICES=1 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/ag_news/textcnn.yaml --aug agnews_sges
+CUDA_VISIBLE_DEVICES=2 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/ag_news/attbilstm.yaml --aug agnews_sges
+CUDA_VISIBLE_DEVICES=3 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/ag_news/transformer.yaml --aug agnews_sges
+
+
+# FOR DBPEDIA BASELINE
+CUDA_VISIBLE_DEVICES=0 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/dbpedia/fasttext.yaml
+CUDA_VISIBLE_DEVICES=1 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/dbpedia/textcnn.yaml
+CUDA_VISIBLE_DEVICES=2 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/dbpedia/attbilstm.yaml
+CUDA_VISIBLE_DEVICES=3 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/dbpedia/transformer.yaml
+
+
+# FOR YAHOO ANSWERS BASELINE
+CUDA_VISIBLE_DEVICES=0 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/yahoo_answers/fasttext.yaml
+CUDA_VISIBLE_DEVICES=1 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/yahoo_answers/textcnn.yaml
+CUDA_VISIBLE_DEVICES=2 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/yahoo_answers/attbilstm.yaml
+CUDA_VISIBLE_DEVICES=3 python autoaugment/domain/nlp/classification/train.py -c autoaugment/domain/nlp/classification/configs/yahoo_answers/transformer.yaml
+
+
+for i in {1..3}; do python -W ignore -u -m torch.distributed.launch --nproc_per_node=4 autoaugment/domain/vision/classification/train.py -c autoaugment/domain/vision/classification/confs/wrn_40x2_cifar10.yaml --verbose --aug=ars; done

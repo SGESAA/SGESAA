@@ -1,0 +1,20 @@
+model:
+  type: wresnet40_2
+dataset: reduced_cifar10
+aug: default
+cutout: 16
+batch: 128
+epoch: 100
+lr: 0.1
+lr_schedule:
+  type: 'cosine'
+  warmup:
+    multiplier: 1
+    epoch: 5
+optimizer:
+  type: sgd
+  nesterov: True
+  decay: 0.0002
+  ema: 0
+exp:
+  dir: experiments/wrn_40x2_rc10

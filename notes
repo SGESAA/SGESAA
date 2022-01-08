@@ -1,0 +1,8 @@
+1. nlpaug 的 base_augmentor.py 224行 需要更改 sample 函数：
+random.sample(x, num if len(x) > num else len(x))
+
+2. nlpaug 的 word_augmentor.py 100行更改：
+start_aug_idx = self.sample(word_idxes, 1)[0] 前加上判断
+
+if len(word_idxes) == 0:
+    return []

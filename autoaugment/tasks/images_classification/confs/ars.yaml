@@ -1,0 +1,20 @@
+ars:
+    nb_iterations: 100
+    nb_directions: 8
+    nb_elite: 8
+    nb_workers: 8
+    step_size: 0.03
+    delta_std: 0.05
+    noise_size: 25000000
+    env_seed: 42
+    nb_evaluate: &nb_workers
+    policy:
+        type: linear
+        ob_filter: MeanStdFilter
+        action_dim: 30
+        ob_dim: 1
+exp:
+    dir: experiments/ars_00_cifar10_wrn40x2_ep_90_it_100_4000
+    policy_saved: line_policy.pickle
+    nb_gpu: 2
+    xx: ars_00_cifar10_resnet18_ep_90_it_100_4000

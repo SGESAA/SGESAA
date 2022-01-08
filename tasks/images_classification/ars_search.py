@@ -1,0 +1,71 @@
+import ray
+
+from theconf import Config as C, ConfigArgumentParser
+from autoaugment.search.ars.trainer import ARSTrainer
+from autoaugment.search.common.fitness import Fitness
+from autoaugment.search.common.utils import generate_subpolicies
+# 所有的数据增强操作
+from autoaugment.augmentation.image_aug import image_transformations
+from autoaugment.augmentation.augmentation import Augmentation
+from autoaugment.domain.vision.classification.train import train_with_subpolicies
+
+
+class ARSSearch(Fitness):
+    def evaluate(self, params, env_config, **kwargs):
+        if 'gpu_id' in kwargs.keys():
+            gpu_id = kwargs['gpu_id']
+        else:
+            gpu_id = 0
+        if 'iteration' in kwargs.keys():
+            iteration = kwargs['iteration']
+        else:
+            iteration = 1
+        if 'logger' in kwargs.keys():
+            logger = kwargs['logger']
+        else:
+            logger = None
+        if 'worker_id' in kwargs.keys():
+            worker_id = kwargs['worker_id']
+        else:
+            worker_id = 0
+        subpolicies = generate_subpolicies(
+            params, augmentation_list=image_transformations)
+        logger.info(f'Iteration {iteration}, evaluate sub policies:')
+
+        for sp in generate_subpolicies(
+                params, denormalize=False,
+                augmentation_list=image_transformations):
+            logger.info(f'{sp},')
+        result = train_with_subpolicies(env_config=env_config,
+                                        augmentation_func=Augmentation,
+                                        subpolicies=subpolicies,
+                                        gpu_id=gpu_id,
+                                        worker_id=worker_id)
+        reward = result['top1_test']
+        # reward = result['top1_valid']
+        # import random
+        # reward = random.uniform(0.5, 0.7)
+        logger.info(f'Rewards: {reward}')
+        logger.info('')
+        return reward
+
+    def get_initial_solution(self):
+        return super().get_initial_solution()
+
+# C是什么
+def run_ars():
+    ars_trainer = ARSTrainer(fitness_object_creator=lambda: ARSSearch(),
+                             env_config=C.get(),
+                             augmentation_list=image_transformations)
+    ars_trainer.train()
+
+
+if __name__ == '__main__':
+    import os
+    os.environ["CUDA_VISIBLE_DEVICES"] = '0,1'
+    parser = ConfigArgumentParser(conflict_handler='resolve', lazy=True)
+    args = parser.parse_args()
+    ray.init(num_gpus=C.get()['exp']['nb_gpu'],
+             include_dashboard=False,
+             ignore_reinit_error=True)
+    run_ars()

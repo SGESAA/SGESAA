@@ -1,0 +1,22 @@
+sges:
+    nb_iterations: 100
+    nb_directions: 8
+    nb_elite: 6
+    nb_workers: 8
+    step_size: 0.2
+    env_seed: 42
+    nb_evaluate: &nb_workers
+    warmup: 16
+    policy:
+        type: linear
+        ob_filter: MeanStdFilter
+        action_dim: 30
+        ob_dim: 1
+    noise:
+        alpha: 0
+        k: 20
+        std: 0.05
+exp:
+    dir: experiments/sges_exp_gtzan_resnet_5_100_0.2
+    policy_saved: line_policy.pickle
+    nb_gpu: 4
